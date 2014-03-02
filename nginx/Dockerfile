@@ -10,7 +10,7 @@ RUN wget http://nginx.org/download/nginx-$NGINX_VER.tar.gz -nv
 RUN tar -xf  nginx-$NGINX_VER.tar.gz 
 
 # installing and building
-RUN	cd nginx-$NGINX_VER && ./configure --with-http_spdy_module && make -j8 -s && make install
+RUN	cd nginx-$NGINX_VER && ./configure --with-http_spdy_module --with-http_ssl_module && make -j8 -s && make install
 
 # creating dirs for configs and application static files
 RUN	mkdir /etc/sites-enabled
@@ -23,5 +23,5 @@ VOLUME /static
 
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 
-EXPOSE 80
+EXPOSE 80 443
 ENTRYPOINT 	["/usr/local/nginx/sbin/nginx"]
